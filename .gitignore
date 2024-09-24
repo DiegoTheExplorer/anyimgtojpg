@@ -1,2 +1,4 @@
 inp/*
+!inp/.gitkeep
 out/*
+!out/.gitkeep
