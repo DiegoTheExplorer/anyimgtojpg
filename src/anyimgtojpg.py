@@ -26,6 +26,8 @@ def allImgToJpg(
         return
 
     f_names = os.listdir(src_path)
+    num_files = len(f_names)
+    processed_files = 0
     unsupported_files = []
 
     for file in f_names:
@@ -55,6 +57,11 @@ def allImgToJpg(
             err_label.config(
                 text="Error: The file:" + new_f_name + "could not be saved"
             )
+        processed_files = processed_files + 1
+        completion_percentage = processed_files / num_files
+        status_label["text"] = (
+            str(completion_percentage) + "% of folder contents processed"
+        )
 
     status_label["text"] = "Convertion task complete"
     err_count = len(unsupported_files)
@@ -63,6 +70,8 @@ def allImgToJpg(
             str(err_count)
             + " files were not converted \n The files were transferred to the err folder"
         )
+    else:
+        err_label["text"] = ""
     print("Convertion complete.")
 
 
