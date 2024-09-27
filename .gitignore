@@ -4,3 +4,5 @@ out/*
 !out/.gitkeep
 src/err/*
 dist/err/*
+!src/err
+!dist/err
