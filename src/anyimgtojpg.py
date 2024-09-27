@@ -59,7 +59,10 @@ def allImgToJpg(
     status_label["text"] = "Convertion task complete"
     err_count = len(unsupported_files)
     if err_count > 0:
-        err_label["text"] = str(err_count) + " files were not converted"
+        err_label["text"] = (
+            str(err_count)
+            + " files were not converted \n The files were transferred to the err folder"
+        )
     print("Convertion complete.")
 
 
@@ -67,6 +70,13 @@ def allImgToJpg(
 def get_dir_path(path_label: tk.Label) -> None:
     path_label.config(text=filedialog.askdirectory())
 
+
+# Check if the err folder exists
+if not os.path.isdir("err"):
+    os.mkdir("err")
+    gk = open("err/.gitkeep", "w")
+    gk.write(".")
+    gk.close()
 
 # Python logging configuration
 logging.basicConfig(
@@ -109,7 +119,7 @@ out_selected_label.pack()
 status_label = tk.Label(root, text="")
 status_label.config(fg="#0A7A16")
 err_label = tk.Label(root, text="")
-status_label.config(fg="#FF0000")
+err_label.config(fg="#FF0000")
 conv_files_btn = tk.Button(
     root,
     text="Convert Images",
