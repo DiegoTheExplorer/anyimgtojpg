@@ -36,6 +36,8 @@ def allImgToJpg(
 
         new_f_name = file.split(".")[0] + ".jpg"
         file_path = src_path + file
+
+        # Openiing the image file
         try:
             img = Image.open(file_path)
         except:
@@ -49,7 +51,23 @@ def allImgToJpg(
             shutil.copy(file_path, err_path)
             continue
 
-        img = img.convert("RGB")
+        # Converting the image from ARGB to just RGB (removing the alpha channel)
+        try:
+            img = img.convert("RGB")
+        except:
+            print(
+                "Error: ARGB to RGB convertion fail. Could not remove alpha channel for file: "
+                + file
+            )
+            unsupported_files.append(file)
+            logging.error(
+                "ARGB to RGB convertion fail. Could not remove alpha channel for file: "
+                + file
+            )
+            shutil.copy(file_path, err_path)
+            continue
+
+        # Saving the image to the selected output directory
         try:
             img.save(out_path + new_f_name, "JPEG")
         except:
